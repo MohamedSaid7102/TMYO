@@ -177,7 +177,13 @@ function App() {
           ))}
         </div>
         <div className="fixed bottom-0 sm:bottom-7 left-0 right-0 p-3 max-w-[740px] m-auto">
-          <div className="flex flex-row flex-nowrap gap-2">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleAddNewIdea();
+            }}
+            className="flex flex-row flex-nowrap gap-2"
+          >
             <input
               type="text"
               name="idea"
@@ -192,11 +198,10 @@ function App() {
             <button
               type="submit"
               className="text-white bg-accent hover:bg-slate-700 focus:bg-slate-700 outline-slate-200 outline-offset-4 rounded-lg px-5"
-              onClick={handleAddNewIdea}
             >
               Add
             </button>
-          </div>
+          </form>
         </div>
       </main>
     </div>

@@ -29,7 +29,7 @@ function Idea({
   return (
     <div
       id="ideaWrapper"
-      className="bg-secondary rounded-md mb-4 p-2 sm:p-5 flex justify-between items-center"
+      className="bg-secondary rounded-3xl mb-4 p-2 sm:p-5 flex justify-between items-center"
     >
       <span className="sm:text-[30px]">{text}</span>
       <div className="flex justify-between items-center gap-2 sm:gap-4">
