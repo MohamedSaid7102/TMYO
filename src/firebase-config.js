@@ -3,13 +3,12 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from '@firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCWHKJWNzcfeITukb7N2u8JMWb8dl6rom4',
-  authDomain: 'tmyo-eed7e.firebaseapp.com',
-  projectId: 'tmyo-eed7e',
-  storageBucket: 'tmyo-eed7e.appspot.com',
-  messagingSenderId: '999045573879',
-  appId: '1:999045573879:web:8d1dd916a739bdbf29b7f2',
-  measurementId: 'G-52LQNXQHKS',
+  apiKey: 'AIzaSyCcGzXmBJYIOpkMzo5qdWxsPZTZrPa16_g',
+  authDomain: 'tmyo-4a912.firebaseapp.com',
+  projectId: 'tmyo-4a912',
+  storageBucket: 'tmyo-4a912.appspot.com',
+  messagingSenderId: '133664464828',
+  appId: '1:133664464828:web:5dba9322d67a129fc595b9',
 };
 
 // Initialize Firebase

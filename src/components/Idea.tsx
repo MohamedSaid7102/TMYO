@@ -18,6 +18,14 @@ function Idea({
   handleLikeIdea,
   handleDisLikeIdea,
 }: Props) {
+  function dislike() {
+    handleDisLikeIdea();
+  }
+
+  function like() {
+    handleLikeIdea();
+  }
+
   return (
     <div
       id="ideaWrapper"
@@ -34,7 +42,7 @@ function Idea({
           className="cursor-pointer p-1 sm:p-4 rounded-full
           hover:bg-[#38bff84a] focus-visible:bg-[#38bff84a] active:bg-[#38bff84a] outline-none"
           aria-label="dislike this idea"
-          onClick={(e) => handleDisLikeIdea()}
+          onClick={dislike}
         >
           <CaretDown
             className="sm:scale-150"
@@ -48,7 +56,7 @@ function Idea({
           className="cursor-pointer p-1 sm:p-4 rounded-full
           hover:bg-[#c01c2756] focus-visible:bg-[#c01c2756] active:bg-[#c01c2756] outline-none"
           aria-label="like this idea"
-          onClick={(e) => handleLikeIdea()}
+          onClick={like}
         >
           <HeartStraight
             className="sm:scale-150"

@@ -30,7 +30,7 @@ type ideasType = ideaType[];
 
 function App() {
   const [newIdea, setNewIdea] = useState<string>('');
-  const [ideas, setIdeas] = useState<ideasType>([]);
+  const [ideas, setIdeas] = useState<ideasType>();
   // make a reference to a collection in the database
   const ideasCollectionRef = collection(db, 'ideas');
 
@@ -48,21 +48,97 @@ function App() {
   }, [ideas]);
 
   const handleAddNewIdea = async () => {
-    if (newIdea.length == 0) return;
-    setNewIdea(''); //empty input feild
+    console.log(`Adding new todo`);
+    if (newIdea.length == 0) {
+      console.log(`Empty todo`);
+
+      return;
+    }
     await addDoc(ideasCollectionRef, {
       text: newIdea,
       likes: 0,
       dislikes: 0,
     });
+    console.log(`added to firebase`);
+    setNewIdea(''); //empty input feild
+    console.log(`empty input box`);
     notifyUser();
+    console.log(`notify user`);
+  };
+
+  const handleLocalStorage = (operation: 'Inc' | 'Dec', id: string) => {
+    const votedIdeas = 'votedIdeas';
+    const delimiter = '|';
+
+    let userVotedIdeas = localStorage.getItem(votedIdeas);
+
+    if (operation == 'Inc') {
+      // no votes yet
+      if (userVotedIdeas == null) {
+        localStorage.setItem(votedIdeas, id + delimiter);
+        return;
+      }
+      // there is votes
+      const newVotedIdeas = userVotedIdeas
+        .split(delimiter)
+        .concat(id)
+        .join(delimiter);
+      localStorage.setItem(votedIdeas, newVotedIdeas);
+    } else {
+      // incase of decrement
+      // no votes yet
+      if (userVotedIdeas == null) {
+        return;
+      }
+      // there is votes
+      const newVotedIdeas = userVotedIdeas
+        .split(delimiter)
+        .filter((voteId) => voteId != id)
+        .join(delimiter);
+      localStorage.setItem(votedIdeas, newVotedIdeas);
+    }
+
+    console.log(`Updated local storage`);
+  };
+
+  const didUserVotedForThisIdea = (
+    operation: 'Inc' | 'Dec',
+    id: string
+  ): boolean => {
+    const votedIdeas = 'votedIdeas';
+    const delimiter = '|';
+
+    let userVotedIdeas = localStorage.getItem(votedIdeas);
+
+    if (userVotedIdeas == null && operation != 'Dec') return false;
+
+    const idExistsInLocalStorage = userVotedIdeas
+      ?.split(delimiter)
+      .includes(id);
+
+    if (operation == 'Inc' && idExistsInLocalStorage) return true;
+    if (operation == 'Inc' && !idExistsInLocalStorage) return false;
+
+    if (operation == 'Dec' && !idExistsInLocalStorage) return true;
+    if (operation == 'Dec' && idExistsInLocalStorage) return false;
+
+    return false;
   };
 
   const handleLikesUpdate = async (
     operation: 'Inc' | 'Dec',
     idea: ideaType | undefined
   ) => {
-    if (idea == undefined) return;
+    console.log(`handle likes`);
+    if (idea == undefined) {
+      console.log(`ideas is undefined`);
+      return;
+    }
+
+    if (didUserVotedForThisIdea(operation, idea.id)) {
+      console.log(`You voted for that..!`);
+      return;
+    }
 
     const ideaDoc = doc(db, 'ideas', idea.id);
     const newFields: ideaFieldType = {
@@ -72,6 +148,10 @@ function App() {
     };
 
     await updateDoc(ideaDoc, newFields);
+    console.log(`backend updated successfully`);
+
+    // Update local storage
+    handleLocalStorage(operation, idea.id);
   };
 
   return (
@@ -85,7 +165,7 @@ function App() {
       <main className="max-w-[640px] m-auto mt-4">
         {/* Ideas */}
         <div className="px-2 sm:px-5 flex flex-col gap-4 pb-[10rem]">
-          {ideas.map((idea) => (
+          {ideas?.map((idea) => (
             <Idea
               key={idea.id}
               text={idea.text}
@@ -97,14 +177,7 @@ function App() {
           ))}
         </div>
         <div className="fixed bottom-0 sm:bottom-7 left-0 right-0 p-3 max-w-[740px] m-auto">
-          <form
-            method="post"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleAddNewIdea();
-            }}
-            className="flex flex-row flex-nowrap gap-2"
-          >
+          <div className="flex flex-row flex-nowrap gap-2">
             <input
               type="text"
               name="idea"
@@ -114,14 +187,16 @@ function App() {
               aria-label="what is your idea"
               className="w-full bg-secondaryLight rounded-lg px-2 sm:px-5 py-4"
               placeholder="What is your idea.."
+              autoComplete="off"
             />
             <button
               type="submit"
               className="text-white bg-accent hover:bg-slate-700 focus:bg-slate-700 outline-slate-200 outline-offset-4 rounded-lg px-5"
+              onClick={handleAddNewIdea}
             >
               Add
             </button>
-          </form>
+          </div>
         </div>
       </main>
     </div>

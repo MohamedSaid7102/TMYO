@@ -13,6 +13,8 @@ node_modules/
 
 todo.todo
 
+text.txt
+
 dist
 dist-ssr
 *.local
