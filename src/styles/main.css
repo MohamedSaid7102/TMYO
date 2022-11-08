@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+}
+
+/* Native css */
+*,
+*::before,
+*::after {
+  transition: all 100ms ease-in-out;
+}
+
+html,
+body {
+  transition: initial;
+}
+
+body {
+  background-color: #28344783;
+  background-color: #0f172a;
+  color: aliceblue;
+  min-height: 100vh;
+}
+
+#ideaInput {
+  backdrop-filter: blur(7px);
+}
+
