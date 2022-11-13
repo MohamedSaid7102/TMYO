@@ -160,7 +160,14 @@ function App() {
         className="text-white text-2xl text-center py-8 px-2
       sm:text-5xl"
       >
-        <h1 className="sm:text-[60px]">Share your ideas..</h1>
+        <h1 className="sm:text-[30px] text-[20px]">
+          لو فيه مساعد شخصي على الموبايل هيكون صديقك ويسهل عليك امور حياتك{' '}
+          <br /> تفضل يكون اسمه ايه؟ <br /> <br />
+          <span className="text-[15px]">
+            "ملحوظة:لمصلحتك اختار "منصور{' '}
+          </span>{' '}
+          <br />{' '}
+        </h1>
       </header>
       <main className="max-w-[640px] m-auto mt-4">
         {/* Ideas */}
@@ -176,7 +183,7 @@ function App() {
             />
           ))}
         </div>
-        <div className="fixed bottom-0 sm:bottom-7 left-0 right-0 p-3 max-w-[740px] m-auto">
+        {/* <div className="fixed bottom-0 sm:bottom-7 left-0 right-0 p-3 max-w-[740px] m-auto">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -202,7 +209,7 @@ function App() {
               Add
             </button>
           </form>
-        </div>
+        </div> */}
       </main>
     </div>
   );
