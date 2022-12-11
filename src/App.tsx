@@ -45,7 +45,7 @@ function App() {
       setIdeas(ideas);
     };
     getIdeas();
-  }, [ideas]);
+  }, []);
 
   const handleAddNewIdea = async () => {
     console.log(`Adding new todo`);
@@ -183,7 +183,7 @@ function App() {
             />
           ))}
         </div>
-        {/* <div className="fixed bottom-0 sm:bottom-7 left-0 right-0 p-3 max-w-[740px] m-auto">
+        <div className="fixed bottom-0 sm:bottom-7 left-0 right-0 p-3 max-w-[740px] m-auto">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -209,7 +209,7 @@ function App() {
               Add
             </button>
           </form>
-        </div> */}
+        </div>
       </main>
     </div>
   );
